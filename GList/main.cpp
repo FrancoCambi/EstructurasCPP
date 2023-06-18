@@ -29,7 +29,7 @@ int main()
 	lista.agregarFinal("que");
 	lista.agregarFinal("tal");
 
-	std::cout << lista.contiene("holas");
+	lista.recorrerReverse(imprimir_cadena);
 	lista.destruir();
 	return 0;
 }
