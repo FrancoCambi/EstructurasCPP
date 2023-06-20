@@ -3,6 +3,13 @@
 
 #include"node.hpp"
 
+typedef enum {
+    IN,
+    PRE,
+    POST,
+    BFS
+}TraversalType;
+
 template<typename tipo>
 // Auxiliar function
 // Returns height of node, -1 if node is nullptr
@@ -97,6 +104,19 @@ Node<tipo>* balance(Node<tipo>* node) {
     node->height = 1 + maxHeightChildren(node);
 
     return node;
+}
+
+template<typename tipo>
+// Auxiliar function.
+// Returns most to the left node.
+Node<tipo>* deepLeft(Node<tipo>* node) {
+
+    Node<tipo>* temp = node;
+
+    while (temp && temp->left != nullptr) 
+        temp = temp->left;
+    
+    return temp;
 }
 
 #endif /* __UTILS_HPP__ */
