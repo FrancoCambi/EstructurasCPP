@@ -15,17 +15,13 @@ int main(void) {
 
     int e = 7, d = 5, f = 4;
 
-    bt.insert(20);
     bt.insert(15);
-    bt.insert(10);
-    bt.insert(9);
-    bt.insert(8);
+    bt.insert(12);
+    bt.insert(17);
     bt.insert(11);
     bt.insert(13);
-    bt.insert(25);
+    bt.insert(16);
+    bt.insert(18);
 
-    bt.remove(20);
-
-    bt.traversal(IN);
     
 }

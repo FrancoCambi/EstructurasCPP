@@ -2,6 +2,7 @@
 #define __BSTREE_HPP__
 
 #include<iostream>
+#include<queue>
 
 typedef enum {
     IN,
@@ -53,7 +54,11 @@ class BSTree {
         // Delete data from BST
         void remove(tipo val);
 
+        // Returns how many nodes are in the tree.
+        int nodeQuantity();
 
+        // Returns an array containing tree data using BFS traversal.
+        tipo* BFSArray();
 
 };
 
@@ -187,5 +192,61 @@ template<class tipo>
 void BSTree<tipo>::remove(tipo val) {
     root = removeAux(root, val);
 }
+
+template<typename tipo>
+int nodeQuantityAux(Node<tipo>* node) {
+
+    if (node == nullptr)
+        return 0;
+    
+    return 1 + nodeQuantityAux(node->left) + nodeQuantityAux(node->right);
+}
+template<class tipo>
+int BSTree<tipo>::nodeQuantity() {
+
+    return nodeQuantityAux(root);
+}
+
+template<typename tipo>
+void BFSArrayAux(Node<tipo>* node, tipo* arr) {
+
+    if (node == nullptr)
+        return;
+
+    std::queue<Node<tipo>*> queue;
+    size_t size = 0;
+
+    queue.push(node);
+
+    while (!queue.empty()) {
+
+        Node<tipo>* currentNode = queue.front();
+
+        arr[size++] = currentNode->data;
+
+        queue.pop();
+
+        if (currentNode->left != nullptr)
+            queue.push(currentNode->left);
+        if (currentNode->right != nullptr)
+            queue.push(currentNode->right);
+        
+    }
+
+}
+template<class tipo>
+tipo* BSTree<tipo>::BFSArray() {
+
+    int nodes = nodeQuantity();
+
+    tipo *arr = new tipo[nodes]();
+
+    BFSArrayAux(root, arr);
+
+    return arr;
+
+}
+
+
 
 #endif /* __BTREE_HPP__ */
