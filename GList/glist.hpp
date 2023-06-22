@@ -3,6 +3,15 @@
 
 #include<iostream>
 
+// If tipo isn't a pointer, do nothing.
+template<typename tipo>
+static void deleteData(tipo data) { return; }
+
+// OVERLOAD -> if tipo is a pointer, delete it.
+template<typename tipo>
+static void deleteData(tipo* data) { delete data; }
+
+
 template<class tipo>
 // Representación de un NODO de una lista simplemente enlazada
 // general.
@@ -10,6 +19,10 @@ class GNodo {
     public:
         tipo dato;
         GNodo<tipo>* next;
+
+        ~GNodo() {
+            deleteData(dato);
+        }
 	
 };
 
@@ -40,6 +53,11 @@ class GList {
 
         // Head getter.
         GNodo<tipo>* getHead() { return head; }
+
+        // Head setter.
+        void setHead(GNodo<tipo>* nodo) {
+            head = nodo;
+        }
 
         // Longitud getter.
         size_t getLongitud() { return longitud; }
@@ -82,6 +100,9 @@ class GList {
 
         // Ordena la lista usando bubbleSort como algoritmo
         void bubbleSort();
+
+        // Devuelve la lista ordenada usando MergeSort como algoritmo
+        void mergeSort();
 
         // Devuelve 1 si el dato esta en la lista, 0 caso contrario
         int contiene(tipo dato);
@@ -320,4 +341,57 @@ int GList<tipo>::contiene(tipo dato) {
     return esta;
 }
 
+template<typename tipo>
+static GNodo<tipo>* mezclar(GNodo<tipo>* nodo1, GNodo<tipo>* nodo2) {
+
+    GNodo<tipo>* listaResultado;
+
+    if (nodo1 == nullptr)
+        return nodo2;
+    else if (nodo2 == nullptr)
+        return nodo1;
+    
+    if (nodo1->dato <= nodo2->dato) {
+        listaResultado = nodo1;
+        listaResultado->next = mezclar(nodo1->next, nodo2);
+    }
+    else {
+        listaResultado = nodo2;
+        listaResultado->next = mezclar(nodo1, nodo2->next);
+    }
+
+    return listaResultado;
+}
+template<typename tipo>
+static GNodo<tipo>* mergeSortAux(GNodo<tipo>* lista, unsigned int longitud) {
+
+    GNodo<tipo>* nodoResultado;
+
+    if (lista == nullptr || lista->next == nullptr)
+        return lista;
+
+    GNodo<tipo>* temp1 = lista, *temp2, *temp3;
+    int cont = 0;
+
+    // Iteramos temp2 hasta que llegue a ser el ultimo nodo de la primer mitad (de temp1)
+    for (temp2 = lista; temp2 != NULL && cont < longitud / 2; temp2 = temp2->next, cont++);
+
+    // Desenlazamos temp1 de temp2 para tener las dos mitades por separado
+    temp3 = temp2->next; // temp3 es el primer nodo de la segunda mitad
+    temp2->next = nullptr; // desenlace de la primera mitad
+
+    temp1 = mergeSortAux(temp1, cont);
+    temp3 = mergeSortAux(temp3, longitud - cont);
+
+    nodoResultado = mezclar(temp1, temp3);
+
+    return nodoResultado;
+
+}
+template<class tipo>
+void GList<tipo>::mergeSort()  {
+
+    head = mergeSortAux(head, longitud);
+
+}
 #endif /* __GLIST_H__ */

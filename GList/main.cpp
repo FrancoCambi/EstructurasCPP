@@ -23,13 +23,26 @@ void sumar(int *dato) {
 int main() 
 {	
 
-	GList<std::string> lista = GList<std::string>();
+	GList<int> lista = GList<int>();
 
-	lista.agregarFinal("hola");
-	lista.agregarFinal("que");
-	lista.agregarFinal("tal");
+	lista.agregarFinal(30);
+	lista.agregarFinal(40);
+	lista.agregarFinal(35);
+	lista.agregarFinal(5);
+	lista.agregarFinal(7);
+	lista.agregarFinal(80);
+	lista.agregarFinal(1);
+	lista.agregarFinal(2);
+	lista.agregarFinal(4);
+	lista.agregarFinal(13);
+	lista.agregarFinal(11);
+	lista.agregarFinal(39);
+	lista.agregarFinal(99);
+	lista.agregarFinal(55);
 
-	lista.recorrerReverse(imprimir_cadena);
+	lista.mergeSort();
+
+	lista.recorrer(imprimir_entero);
 	lista.destruir();
 	return 0;
 }

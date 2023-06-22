@@ -9,7 +9,7 @@ template<class tipo>
 class Stack {
 
     private:
-        std::vector<tipo> arr;
+        std::vector<tipo> vect;
         int top;
 
     public:
@@ -44,21 +44,21 @@ Stack<tipo>::Stack() {
 
 template<class tipo>
 Stack<tipo>::~Stack() {
-    arr.clear();
+    vect.clear();
 }
 
 template<class tipo>
 void Stack<tipo>::push(tipo data) {
     
     top++;
-    arr.push_back(data);
+    vect.push_back(data);
 }
 
 template<class tipo>
 tipo Stack<tipo>::pop() {
 
-    tipo data = arr.back();
-    arr.pop_back();
+    tipo data = vect.back();
+    vect.pop_back();
     top--;
 
     return data;
@@ -67,17 +67,17 @@ tipo Stack<tipo>::pop() {
 template<class tipo>
 tipo Stack<tipo>::peek() {
 
-    return arr.back();
+    return vect.back();
 }
 
 template<class tipo>
 size_t Stack<tipo>::size() {
-    return arr.size();
+    return vect.size();
 }
 
 template<class tipo>
 bool Stack<tipo>::isEmpty() {
-    return arr.empty();
+    return vect.empty();
 }
 
 #endif /* __STACK_HPP__ */

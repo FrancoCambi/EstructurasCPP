@@ -19,6 +19,7 @@ template<typename tipo>
 static void deleteData(tipo* data) { delete data; }
 
 template<class tipo>
+// Tree node class representation.
 class Node {
     public:
         tipo data;
@@ -32,6 +33,7 @@ class Node {
 };
 
 template<class tipo>
+// Binary search tree class representation.
 class BSTree {
     public:
         Node<tipo>* root;
